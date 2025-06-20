@@ -801,6 +801,18 @@
             }
         }
 
+        // Priority styling
+        function updatePriorityStyle(select) {
+            const value = select.value;
+            select.className = '';
+            
+            if (value === 'High') {
+                select.classList.add('priority-high');
+            } else if (value === 'Critical') {
+                select.classList.add('priority-critical');
+            }
+        }
+
         function showMessage(text, type) {
             const messageDiv = document.getElementById('formMessage');
             messageDiv.innerHTML = text.replace(/\n/g, '<br>');
