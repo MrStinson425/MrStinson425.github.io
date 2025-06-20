@@ -15,14 +15,15 @@
             --primary-navy: #1a2332;
             --primary-red: #dc2626;
             --primary-gold: #d4af37;
-            --secondary-navy: #2a3441;
-            --light-gold: #f4e999;
+            --discord-blue: #5865f2;
+            --discord-dark: #2c2f33;
+            --discord-darker: #23272a;
             --text-light: #ffffff;
             --text-gray: #a0aec0;
             --background: #0f1419;
             --card-bg: rgba(26, 35, 50, 0.8);
             --gradient-primary: linear-gradient(135deg, #dc2626 0%, #d4af37 100%);
-            --gradient-secondary: linear-gradient(135deg, #1a2332 0%, #2a3441 100%);
+            --gradient-discord: linear-gradient(135deg, #5865f2 0%, #7289da 100%);
         }
 
         body {
@@ -118,11 +119,13 @@
 
         /* Hero Section */
         .hero {
-            padding: 8rem 2rem 4rem;
-            background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
-            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
             position: relative;
             overflow: hidden;
+            background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
+            padding: 8rem 2rem 4rem;
         }
 
         .hero::before {
@@ -133,232 +136,143 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 50%, rgba(88, 101, 242, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
         }
 
-        .hero-content {
-            max-width: 800px;
+        .hero-container {
+            max-width: 1200px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
             position: relative;
             z-index: 2;
         }
 
-        .hero h1 {
+        .hero-content h1 {
             font-size: clamp(3rem, 5vw, 4rem);
             font-weight: 800;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--text-light) 0%, var(--primary-gold) 100%);
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--discord-blue) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero p {
+        .hero-content p {
             font-size: 1.25rem;
             color: var(--text-gray);
             margin-bottom: 2rem;
+            line-height: 1.7;
         }
 
-        .discord-alert {
-            background: linear-gradient(135deg, #5865f2 0%, #7289da 100%);
+        .discord-cta {
+            background: var(--gradient-discord);
             color: white;
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 2rem auto;
-            max-width: 600px;
-            box-shadow: 0 10px 40px rgba(88, 101, 242, 0.3);
-        }
-
-        .discord-alert h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .discord-alert p {
-            margin: 0;
-            font-size: 1.1rem;
-        }
-
-        .discord-btn {
-            background: #5865f2;
-            color: white;
-            padding: 1rem 2rem;
+            padding: 1.5rem 3rem;
             border: none;
-            border-radius: 12px;
-            font-weight: 600;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
+            box-shadow: 0 8px 32px rgba(88, 101, 242, 0.4);
+            margin-bottom: 1rem;
+        }
+
+        .discord-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(88, 101, 242, 0.6);
+        }
+
+        .discord-icon {
+            width: 32px;
+            height: 32px;
+            fill: currentColor;
+        }
+
+        .support-options {
+            display: flex;
+            gap: 1rem;
             margin-top: 1rem;
         }
 
-        .discord-btn:hover {
-            background: #4752c4;
+        .support-option {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            padding: 0.75rem 1.5rem;
+            border: 2px solid rgba(88, 101, 242, 0.3);
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .support-option:hover {
+            background: rgba(88, 101, 242, 0.2);
+            border-color: var(--discord-blue);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(88, 101, 242, 0.4);
         }
 
-        /* Main Content */
-        .main-content {
-            padding: 4rem 2rem;
-        }
-
-        .content-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Support Options Grid */
-        .support-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 4rem;
-        }
-
-        .support-card {
+        /* Ticket Form Card */
+        .ticket-card {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 2.5rem;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            transition: all 0.3s ease;
-            text-align: center;
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
         }
 
-        .support-card::before {
+        .ticket-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             height: 4px;
-            background: var(--gradient-primary);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            background: var(--gradient-discord);
         }
 
-        .support-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .support-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .support-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--gradient-primary);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
+        .ticket-card h2 {
+            color: var(--discord-blue);
             font-size: 2rem;
-        }
-
-        .support-card h3 {
-            color: var(--text-light);
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .support-card p {
-            color: var(--text-gray);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .support-details {
-            color: var(--primary-gold);
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .support-btn {
-            background: transparent;
-            color: var(--primary-gold);
-            border: 2px solid var(--primary-gold);
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .support-btn:hover {
-            background: var(--primary-gold);
-            color: var(--primary-navy);
-            transform: translateY(-2px);
-        }
-
-        /* Special Discord card styling */
-        .discord-card {
-            border: 1px solid rgba(88, 101, 242, 0.3);
-            background: linear-gradient(135deg, rgba(88, 101, 242, 0.1) 0%, var(--card-bg) 100%);
-        }
-
-        .discord-card::before {
-            background: linear-gradient(135deg, #5865f2 0%, #7289da 100%);
-        }
-
-        .discord-card .support-icon {
-            background: linear-gradient(135deg, #5865f2 0%, #7289da 100%);
-        }
-
-        /* Contact Form */
-        .contact-section {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 3rem;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            margin-bottom: 4rem;
-        }
-
-        .contact-section h2 {
-            text-align: center;
-            color: var(--text-light);
-            font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text-light) 0%, var(--primary-gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        .contact-section .subtitle {
-            text-align: center;
+        .ticket-card .subtitle {
             color: var(--text-gray);
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             font-size: 1.1rem;
         }
 
-        .form-grid {
+        /* Form Styles */
+        .ticket-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 1.5rem;
         }
 
         .form-group {
-            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
         }
 
         .form-group.full-width {
@@ -366,37 +280,37 @@
         }
 
         .form-group label {
-            display: block;
             color: var(--text-light);
             font-weight: 600;
             margin-bottom: 0.5rem;
+            font-size: 0.95rem;
         }
 
         .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(212, 175, 55, 0.3);
+        .form-group select,
+        .form-group textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(88, 101, 242, 0.2);
             border-radius: 12px;
+            padding: 1rem;
             color: var(--text-light);
             font-size: 1rem;
-            transition: all 0.3s ease;
             font-family: inherit;
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
-            border-color: var(--primary-gold);
-            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--discord-blue);
+            background: rgba(88, 101, 242, 0.1);
+            box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.1);
         }
 
         .form-group textarea {
-            resize: vertical;
             min-height: 120px;
+            resize: vertical;
         }
 
         .form-group input::placeholder,
@@ -404,22 +318,39 @@
             color: var(--text-gray);
         }
 
-        .submit-btn {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
+        .priority-select {
+            position: relative;
         }
 
-        .submit-btn:hover {
+        .priority-high {
+            border-color: #ef4444 !important;
+        }
+
+        .priority-critical {
+            border-color: #dc2626 !important;
+            animation: pulse 2s infinite;
+        }
+
+        .submit-btn {
+            background: var(--gradient-discord);
+            color: white;
+            padding: 1.25rem 2rem;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
+            box-shadow: 0 12px 32px rgba(88, 101, 242, 0.4);
         }
 
         .submit-btn:disabled {
@@ -430,148 +361,113 @@
 
         /* Success/Error Messages */
         .message {
-            padding: 1rem 2rem;
+            padding: 1.25rem;
             border-radius: 12px;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             display: none;
+            font-weight: 600;
         }
 
         .message.success {
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.2) 100%);
+            border: 2px solid rgba(16, 185, 129, 0.4);
             color: #10b981;
         }
 
         .message.error {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.2) 100%);
+            border: 2px solid rgba(239, 68, 68, 0.4);
             color: #ef4444;
         }
 
-        /* FAQ Section */
-        .faq-section {
+        /* Discord Preview */
+        .discord-preview {
+            background: var(--discord-darker);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-left: 4px solid var(--discord-blue);
+        }
+
+        .discord-preview h3 {
+            color: var(--discord-blue);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .discord-preview p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
             margin-top: 4rem;
         }
 
-        .faq-section h2 {
+        .quick-action {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(88, 101, 242, 0.2);
             text-align: center;
-            color: var(--text-light);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .quick-action:hover {
+            transform: translateY(-5px);
+            border-color: var(--discord-blue);
+            box-shadow: 0 15px 40px rgba(88, 101, 242, 0.2);
+        }
+
+        .quick-action-icon {
             font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            background: linear-gradient(135deg, var(--text-light) 0%, var(--primary-gold) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .faq-item {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 12px;
             margin-bottom: 1rem;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            overflow: hidden;
-            transition: all 0.3s ease;
+            display: block;
         }
 
-        .faq-item:hover {
-            border-color: var(--primary-gold);
-        }
-
-        .faq-question {
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
+        .quick-action h3 {
             color: var(--text-light);
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        .faq-icon {
-            color: var(--primary-gold);
             font-size: 1.2rem;
-            transition: transform 0.3s ease;
+            margin-bottom: 0.5rem;
         }
 
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .faq-answer.active {
-            max-height: 200px;
-        }
-
-        .faq-answer-content {
-            padding: 0 1.5rem 1.5rem;
+        .quick-action p {
             color: var(--text-gray);
-            line-height: 1.7;
+            font-size: 0.9rem;
         }
-
-        /* Status Indicators */
-        .status-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .status-item {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 0.5rem;
-        }
-
-        .status-operational { background: #10b981; }
-        .status-maintenance { background: #f59e0b; }
-        .status-down { background: #ef4444; }
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .support-grid {
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .form-row {
                 grid-template-columns: 1fr;
             }
 
-            .form-grid {
-                grid-template-columns: 1fr;
+            .support-options {
+                flex-direction: column;
             }
 
             .nav-menu {
                 display: none;
             }
 
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero p {
-                font-size: 1.1rem;
-            }
-
-            .contact-section {
+            .ticket-card {
                 padding: 2rem;
             }
         }
@@ -590,42 +486,22 @@
             }
         }
 
-        /* Discord Widget */
-        .discord-widget {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: linear-gradient(135deg, #5865f2 0%, #7289da 100%);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .discord-widget:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(88, 101, 242, 0.4);
-        }
-
-        .discord-widget::before {
-            content: '💬';
-            font-size: 1.2rem;
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -648,370 +524,254 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <h1>Expert Support When You Need It</h1>
-            <p>Our dedicated support team combines technical expertise with the patience and attention to detail that defines Japanese customer service.</p>
-            
-            <div class="discord-alert">
-                <h3>💬 Join Our Discord Community</h3>
-                <p>Get instant help from our team and connect with other users in our Discord server.</p>
-                <a href="https://discord.gg/uJtG6fmmWp" target="_blank" class="discord-btn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <div class="hero-container">
+            <div class="hero-content fade-in">
+                <h1>Get Support Through Discord</h1>
+                <p>Join our active Discord community for instant help, or submit a support ticket below that goes directly to our support team.</p>
+                
+                <a href="https://discord.gg/uJtG6fmmWp" target="_blank" class="discord-cta">
+                    <svg class="discord-icon" viewBox="0 0 24 24">
                         <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
                     </svg>
                     Join Discord Server
                 </a>
+
+                <div class="support-options">
+                    <a href="#ticket-form" class="support-option">📧 Submit Ticket</a>
+                    <a href="docs.html" class="support-option">📚 Documentation</a>
+                    <a href="status.html" class="support-option">📊 Status Page</a>
+                </div>
+            </div>
+
+            <!-- Support Ticket Form -->
+            <div class="ticket-card fade-in" id="ticket-form">
+                <h2>
+                    🎫 Submit Support Ticket
+                </h2>
+                <p class="subtitle">Your ticket will be instantly sent to our Discord support team</p>
+
+                <div id="formMessage" class="message"></div>
+
+                <form class="ticket-form" id="supportForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required placeholder="john@example.com">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="discord">Discord Username</label>
+                            <input type="text" id="discord" name="discord" placeholder="username#1234 (optional)">
+                        </div>
+                        <div class="form-group priority-select">
+                            <label for="priority">Priority *</label>
+                            <select id="priority" name="priority" required onchange="updatePriorityStyle(this)">
+                                <option value="">Select Priority</option>
+                                <option value="Low">🟢 Low - General question</option>
+                                <option value="Medium">🟡 Medium - Non-urgent issue</option>
+                                <option value="High">🟠 High - Urgent problem</option>
+                                <option value="Critical">🔴 Critical - Service down</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category">
+                                <option value="">Select Category</option>
+                                <option value="Bot Issue">🤖 Bot Issue</option>
+                                <option value="Configuration">⚙️ Configuration Help</option>
+                                <option value="Billing">💳 Billing & Account</option>
+                                <option value="Feature Request">✨ Feature Request</option>
+                                <option value="Bug Report">🐛 Bug Report</option>
+                                <option value="Other">❓ Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bot">Related Bot</label>
+                            <select id="bot" name="bot">
+                                <option value="">Select Bot</option>
+                                <option value="ModGuard Pro">🛡️ ModGuard Pro</option>
+                                <option value="MusicMaster">🎵 MusicMaster</option>
+                                <option value="EconomyCore">💰 EconomyCore</option>
+                                <option value="EventManager">📅 EventManager</option>
+                                <option value="ReactionRole+">⚡ ReactionRole+</option>
+                                <option value="Analytics Pro">📊 Analytics Pro</option>
+                                <option value="WelcomeWave">👋 WelcomeWave</option>
+                                <option value="GameHub">🎮 GameHub</option>
+                                <option value="Other">❓ Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="subject">Subject *</label>
+                        <input type="text" id="subject" name="subject" required placeholder="Brief description of your issue">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="message">Detailed Description *</label>
+                        <textarea id="message" name="message" required placeholder="Please describe your issue in detail. Include:&#10;• What you were trying to do&#10;• What happened instead&#10;• Any error messages&#10;• Steps to reproduce the issue"></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span>Send to Discord Support</span>
+                    </button>
+                </form>
+
+                <div class="discord-preview">
+                    <h3>💬 How it works</h3>
+                    <p>Your ticket automatically creates a support thread in our Discord server where our team can assist you in real-time. You'll get email updates and can join our Discord to participate in the conversation!</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <div class="content-container">
-            <!-- Support Options -->
-            <div class="support-grid fade-in">
-                <div class="support-card discord-card">
-                    <div class="support-icon">💬</div>
-                    <h3>Discord Community</h3>
-                    <p>Join our active Discord server for instant support, community discussions, and direct access to our development team.</p>
-                    <div class="support-details">Active 24/7</div>
-                    <a href="https://discord.gg/uJtG6fmmWp" target="_blank" class="support-btn">Join Discord</a>
-                </div>
-
-                <div class="support-card">
-                    <div class="support-icon">📧</div>
-                    <h3>Support Tickets</h3>
-                    <p>Submit detailed support requests that get automatically routed to our Discord server for tracking and resolution.</p>
-                    <div class="support-details">Response within 2 hours</div>
-                    <a href="#contact-form" class="support-btn">Create Ticket</a>
-                </div>
-
-                <div class="support-card">
-                    <div class="support-icon">🎥</div>
-                    <h3>Screen Share Support</h3>
-                    <p>Schedule one-on-one screen sharing sessions through Discord for hands-on troubleshooting and configuration help.</p>
-                    <div class="support-details">By appointment</div>
-                    <a href="https://discord.gg/uJtG6fmmWp" target="_blank" class="support-btn">Schedule Session</a>
-                </div>
-
-                <div class="support-card">
-                    <div class="support-icon">🏢</div>
-                    <h3>Enterprise Support</h3>
-                    <p>Dedicated private Discord channels, priority support, and custom SLA agreements for enterprise customers.</p>
-                    <div class="support-details">Custom SLA available</div>
-                    <a href="#contact-form" class="support-btn">Learn More</a>
-                </div>
-
-                <div class="support-card">
-                    <div class="support-icon">🌐</div>
-                    <h3>Community Forum</h3>
-                    <p>Browse our Discord community channels to find answers, share best practices, and connect with other bot users.</p>
-                    <div class="support-details">Free • Always open</div>
-                    <a href="https://discord.gg/uJtG6fmmWp" target="_blank" class="support-btn">Browse Forum</a>
-                </div>
-
-                <div class="support-card">
-                    <div class="support-icon">📚</div>
-                    <h3>Knowledge Base</h3>
-                    <p>Comprehensive documentation, tutorials, and guides available in our Discord server and documentation site.</p>
-                    <div class="support-details">Self-service</div>
-                    <a href="docs.html" class="support-btn">View Docs</a>
-                </div>
-            </div>
-
-            <!-- System Status -->
-            <div class="fade-in">
-                <h2 style="text-align: center; color: var(--text-light); margin-bottom: 2rem; font-size: 2rem;">System Status</h2>
-                <div class="status-grid">
-                    <div class="status-item">
-                        <span class="status-indicator status-operational"></span>
-                        <strong>Discord Bots</strong><br>
-                        <small style="color: var(--text-gray);">All systems operational</small>
-                    </div>
-                    <div class="status-item">
-                        <span class="status-indicator status-operational"></span>
-                        <strong>Support Server</strong><br>
-                        <small style="color: var(--text-gray);">Online & responsive</small>
-                    </div>
-                    <div class="status-item">
-                        <span class="status-indicator status-operational"></span>
-                        <strong>API Services</strong><br>
-                        <small style="color: var(--text-gray);">Fully operational</small>
-                    </div>
-                    <div class="status-item">
-                        <span class="status-indicator status-operational"></span>
-                        <strong>Ticket System</strong><br>
-                        <small style="color: var(--text-gray);">Processing normally</small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contact Form -->
-            <section class="contact-section fade-in" id="contact-form">
-                <h2>Submit a Support Ticket</h2>
-                <p class="subtitle">Create a ticket that will be sent directly to our Discord server for tracking</p>
-                
-                <div id="formMessage" class="message"></div>
-                
-                <form id="supportForm">
-                    <div class="form-grid">
-                        <div class="form-group full-width">
-                            <label for="subject">Subject *</label>
-                            <input type="text" id="subject" name="subject" required placeholder="Brief description of your issue">
-                        </div>
-
-                        <div class="form-group full-width">
-                            <label for="message">Detailed Description *</label>
-                            <textarea id="message" name="message" required placeholder="Please provide as much detail as possible including:&#10;• Steps to reproduce the issue&#10;• Expected vs actual behavior&#10;• Any error messages&#10;• Screenshots (if applicable)&#10;• When the issue started"></textarea>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        Submit Support Ticket
-                    </button>
-                </form>
-            </section>
-
-            <!-- FAQ Section -->
-            <section class="faq-section fade-in">
-                <h2>Frequently Asked Questions</h2>
-                
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>How do I get help in your Discord server?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Join our Discord server and head to the #support channel. Our team monitors it 24/7 and you can also get help from other community members. For urgent issues, mention @Support Team to get immediate attention.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What happens when I submit a support ticket?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Your ticket is automatically posted to our private support channel in Discord where our team can track, discuss, and resolve your issue. You'll receive updates via email and can also check progress in our Discord server.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Do you offer support in languages other than English?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Yes! We offer comprehensive support in English and Japanese through our Discord server. We also have community translators who can help with Spanish, French, and German in our international channels.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Can I schedule a one-on-one support session?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Absolutely! Join our Discord server and use the /schedule command or contact our team directly. We offer screen sharing sessions for complex technical discussions, training, and guided integrations.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What's included in enterprise Discord support?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Enterprise customers get private Discord channels, dedicated support staff, priority response times, custom SLA agreements, and direct access to our development team for feature requests and integrations.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>How do I report a security vulnerability?</span>
-                        <span class="faq-icon">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Please DM our Security Team directly in Discord or email security@kojinstudios.com. Do not post security vulnerabilities in public channels. We follow responsible disclosure practices and will respond within 24 hours.
-                        </div>
-                    </div>
-                </div>
-            </section>
+    <!-- Quick Actions -->
+    <section style="padding: 4rem 2rem; max-width: 1200px; margin: 0 auto;">
+        <div class="quick-actions fade-in">
+            <a href="https://discord.gg/uJtG6fmmWp" target="_blank" class="quick-action">
+                <span class="quick-action-icon">💬</span>
+                <h3>Live Chat</h3>
+                <p>Get instant help in our Discord server</p>
+            </a>
+            <a href="docs.html" class="quick-action">
+                <span class="quick-action-icon">📖</span>
+                <h3>Documentation</h3>
+                <p>Browse guides and tutorials</p>
+            </a>
+            <a href="status.html" class="quick-action">
+                <span class="quick-action-icon">⚡</span>
+                <h3>Service Status</h3>
+                <p>Check if all systems are operational</p>
+            </a>
+            <a href="https://discord.gg/uJtG6fmmWp" target="_blank" class="quick-action">
+                <span class="quick-action-icon">🎥</span>
+                <h3>Screen Share</h3>
+                <p>Schedule one-on-one support sessions</p>
+            </a>
         </div>
-    </main>
-
-    <!-- Discord Widget -->
-    <div class="discord-widget pulse" onclick="openDiscord()">
-        Join Discord
-    </div>
+    </section>
 
     <script>
-        // Discord webhook URL for support tickets (channel ID: 1377367507987599441)
+        // Discord webhook URL
         const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1385693343685542019/BOV36UbgAvfX3aLP-ip4p-TSwvqIZUQB8BJYMkv6sM-FvOPQCoHsMbKFLcGmhNVH957j';
 
-        // Form submission handling with Discord integration
+        // Priority styling
+        function updatePriorityStyle(select) {
+            const value = select.value;
+            select.className = 'form-control';
+            
+            if (value === 'High') {
+                select.classList.add('priority-high');
+            } else if (value === 'Critical') {
+                select.classList.add('priority-critical');
+            }
+        }
+
+        // Form submission
         document.getElementById('supportForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const submitBtn = document.getElementById('submitBtn');
             const messageDiv = document.getElementById('formMessage');
-            
-            // Get form data
             const formData = new FormData(this);
             const ticketData = Object.fromEntries(formData.entries());
             
-            // Validate required fields
+            // Validation
             if (!ticketData.name || !ticketData.email || !ticketData.priority || !ticketData.subject || !ticketData.message) {
-                showMessage('Please fill in all required fields marked with *', 'error');
+                showMessage('⚠️ Please fill in all required fields marked with *', 'error');
                 return;
             }
-            
-            // Disable submit button
+
+            // Update button state
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting Ticket...';
+            submitBtn.innerHTML = '<div class="loading-spinner"></div><span>Sending to Discord...</span>';
             
             try {
                 // Generate ticket ID
                 const ticketId = 'KS-' + Math.random().toString(36).substr(2, 9).toUpperCase();
                 
-                // Create Discord embed
-                const discordPayload = {
-                    embeds: [{
-                        title: `🎫 New Support Ticket - ${ticketId}`,
-                        color: 0xD4AF37, // Gold color
-                        fields: [
-                            {
-                                name: "👤 Customer Info",
-                                value: `**Name:** ${ticketData.name}\n**Email:** ${ticketData.email}\n**Discord:** ${ticketData.discord || 'Not provided'}`,
-                                inline: false
-                            },
-                            {
-                                name: "🔥 Priority",
-                                value: ticketData.priority,
-                                inline: true
-                            },
-                            {
-                                name: "📂 Category",
-                                value: ticketData.category || 'Not specified',
-                                inline: true
-                            },
-                            {
-                                name: "🤖 Related Bot",
-                                value: ticketData.bot || 'Not specified',
-                                inline: true
-                            },
-                            {
-                                name: "📋 Subject",
-                                value: ticketData.subject,
-                                inline: false
-                            },
-                            {
-                                name: "📝 Description",
-                                value: ticketData.message.length > 1000 ? 
-                                       ticketData.message.substring(0, 1000) + '...' : 
-                                       ticketData.message,
-                                inline: false
-                            }
-                        ],
-                        footer: {
-                            text: `Ticket ID: ${ticketId} • Submitted via Website`,
-                            icon_url: "https://cdn.discordapp.com/emojis/123456789012345678.png"
-                        },
-                        timestamp: new Date().toISOString()
-                    }]
+                // Get priority color
+                const priorityColors = {
+                    'Low': 0x10b981,
+                    'Medium': 0xf59e0b,
+                    'High': 0xef4444,
+                    'Critical': 0xdc2626
                 };
 
-                // Send to Discord webhook
+                // Create Discord embed
+                const embed = {
+                    title: `🎫 New Support Ticket`,
+                    description: `**Ticket ID:** \`${ticketId}\`\n**Priority:** ${ticketData.priority}`,
+                    color: priorityColors[ticketData.priority] || 0x5865f2,
+                    fields: [
+                        {
+                            name: "👤 Customer",
+                            value: `**Name:** ${ticketData.name}\n**Email:** ${ticketData.email}\n**Discord:** ${ticketData.discord || 'Not provided'}`,
+                            inline: false
+                        },
+                        {
+                            name: "📂 Issue Details",
+                            value: `**Category:** ${ticketData.category || 'Not specified'}\n**Bot:** ${ticketData.bot || 'Not specified'}`,
+                            inline: true
+                        },
+                        {
+                            name: "🔥 Priority",
+                            value: ticketData.priority,
+                            inline: true
+                        },
+                        {
+                            name: "📋 Subject",
+                            value: ticketData.subject,
+                            inline: false
+                        },
+                        {
+                            name: "📝 Description",
+                            value: ticketData.message.length > 1000 ? 
+                                   ticketData.message.substring(0, 1000) + '...' : 
+                                   ticketData.message,
+                            inline: false
+                        }
+                    ],
+                    footer: {
+                        text: `Submitted via Website • ${new Date().toLocaleString()}`
+                    },
+                    timestamp: new Date().toISOString()
+                };
+
+                // Send to Discord
                 const response = await fetch(DISCORD_WEBHOOK_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(discordPayload)
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to send to Discord');
-                }
-                
-                // Show success message
-                showMessage(`✅ Support ticket ${ticketId} submitted successfully!\n\nYour ticket has been sent to our Discord server and you'll receive email updates at ${ticketData.email}. You can also join our Discord server to track progress and get immediate help.`, 'success');
-                
-                // Reset form
-                this.reset();
-                
-                // Optional: Auto-redirect to Discord after a delay
-                setTimeout(() => {
-                    if (confirm('Would you like to join our Discord server to track your ticket and get immediate help?')) {
-                        window.open('https://discord.gg/uJtG6fmmWp', '_blank');
-                    }
-                }, 3000);
-                
-            } catch (error) {
-                console.error('Error submitting ticket:', error);
-                showMessage('❌ There was an error submitting your ticket. Please try again or contact us directly in Discord.', 'error');
-            } finally {
-                // Re-enable submit button
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit Support Ticket';
-            }
-        });
-
-        function showMessage(text, type) {
+                    body: JSON.stringify({
+                        content: ticketData.priority === 'Critical' ? '🚨 **CRITICAL TICKET** 🚨' : null,
+                        embeds: [embed]
+                    })
+                function showMessage(text, type) {
             const messageDiv = document.getElementById('formMessage');
-            messageDiv.textContent = text;
+            messageDiv.innerHTML = text.replace(/\n/g, '<br>');
             messageDiv.className = `message ${type}`;
             messageDiv.style.display = 'block';
             
-            // Auto-hide success messages after 10 seconds
+            // Auto-hide after 15 seconds for success messages
             if (type === 'success') {
                 setTimeout(() => {
                     messageDiv.style.display = 'none';
-                }, 10000);
+                }, 15000);
             }
-        }
-
-        // FAQ Toggle functionality
-        function toggleFAQ(element) {
-            const faqItem = element.parentElement;
-            const answer = element.nextElementSibling;
-            const icon = element.querySelector('.faq-icon');
             
-            // Close all other FAQ items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                if (item !== faqItem) {
-                    item.classList.remove('active');
-                    item.querySelector('.faq-answer').classList.remove('active');
-                    item.querySelector('.faq-icon').textContent = '+';
-                }
-            });
-            
-            // Toggle current item
-            if (faqItem.classList.contains('active')) {
-                faqItem.classList.remove('active');
-                answer.classList.remove('active');
-                icon.textContent = '+';
-            } else {
-                faqItem.classList.add('active');
-                answer.classList.add('active');
-                icon.textContent = '−';
-            }
-        }
-
-        // Discord functions
-        function openDiscord() {
-            window.open('https://discord.gg/uJtG6fmmWp', '_blank');
+            // Scroll to message
+            messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
         // Smooth scrolling for anchor links
@@ -1054,117 +814,136 @@
             observer.observe(el);
         });
 
+        // Auto-fill Discord username if provided in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const discordUser = urlParams.get('discord');
+        if (discordUser) {
+            document.getElementById('discord').value = discordUser;
+        }
+
+        // Add some enhancements
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add focus effects
+            const inputs = document.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.style.transform = 'scale(1.02)';
+                });
+                input.addEventListener('blur', () => {
+                    input.parentElement.style.transform = 'scale(1)';
+                });
+            });
+
+            // Add character counter for description
+            const messageTextarea = document.getElementById('message');
+            const counter = document.createElement('div');
+            counter.style.cssText = 'font-size: 0.8rem; color: var(--text-gray); text-align: right; margin-top: 0.5rem;';
+            messageTextarea.parentElement.appendChild(counter);
+            
+            messageTextarea.addEventListener('input', () => {
+                const length = messageTextarea.value.length;
+                counter.textContent = `${length}/2000 characters`;
+                counter.style.color = length > 1800 ? '#ef4444' : 'var(--text-gray)';
+            });
+
+            // Show helpful tips
+            setTimeout(() => {
+                console.log('💡 Support Tips:\n• Be specific about your issue\n• Include error messages if any\n• Mention which bot is affected\n• Join our Discord for instant help!');
+            }, 2000);
+        });
+
         // Mobile menu toggle
         function createMobileMenu() {
             const navMenu = document.querySelector('.nav-menu');
             const navContainer = document.querySelector('.nav-container');
             
-            const mobileToggle = document.createElement('button');
-            mobileToggle.innerHTML = '☰';
-            mobileToggle.className = 'mobile-toggle';
-            mobileToggle.style.cssText = `
-                display: none;
-                background: none;
-                border: none;
-                color: var(--primary-gold);
-                font-size: 1.5rem;
-                cursor: pointer;
-            `;
-            
-            // Add mobile styles
-            const mobileStyles = document.createElement('style');
-            mobileStyles.textContent = `
-                @media (max-width: 768px) {
-                    .mobile-toggle { display: block !important; }
-                    .nav-menu { 
-                        display: none;
-                        position: absolute;
-                        top: 100%;
-                        left: 0;
-                        right: 0;
-                        background: var(--primary-navy);
-                        flex-direction: column;
-                        padding: 2rem;
-                        gap: 1rem;
-                        border-top: 1px solid rgba(212, 175, 55, 0.2);
-                    }
-                    .nav-menu.active { display: flex; }
-                    .discord-widget { bottom: 1rem; right: 1rem; padding: 0.75rem 1rem; }
-                }
-            `;
-            document.head.appendChild(mobileStyles);
-            
-            mobileToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-            });
-            
-            navContainer.appendChild(mobileToggle);
+            if (window.innerWidth <= 768) {
+                const mobileToggle = document.createElement('button');
+                mobileToggle.innerHTML = '☰';
+                mobileToggle.style.cssText = `
+                    background: none;
+                    border: none;
+                    color: var(--primary-gold);
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                `;
+                
+                mobileToggle.addEventListener('click', () => {
+                    navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+                    navMenu.style.position = 'absolute';
+                    navMenu.style.top = '100%';
+                    navMenu.style.left = '0';
+                    navMenu.style.right = '0';
+                    navMenu.style.background = 'var(--primary-navy)';
+                    navMenu.style.flexDirection = 'column';
+                    navMenu.style.padding = '2rem';
+                    navMenu.style.gap = '1rem';
+                });
+                
+                navContainer.appendChild(mobileToggle);
+            }
         }
 
         createMobileMenu();
 
-        // Add some helpful tips
-        document.addEventListener('DOMContentLoaded', () => {
-            // Show tips after a delay
+        // Add some Easter eggs
+        let clickCount = 0;
+        document.querySelector('.logo').addEventListener('click', (e) => {
+            clickCount++;
+            if (clickCount === 5) {
+                e.preventDefault();
+                alert('🎉 You found an Easter egg! You\'re clearly dedicated to finding help - our Discord team will love assisting someone so thorough!');
+                clickCount = 0;
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + Enter to submit form
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                const form = document.getElementById('supportForm');
+                if (form) {
+                    form.dispatchEvent(new Event('submit', { cancelable: true }));
+                }
+            }
+            
+            // Ctrl/Cmd + D to go to Discord
+            if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                e.preventDefault();
+                window.open('https://discord.gg/uJtG6fmmWp', '_blank');
+            }
+        });
+
+        // Add loading state for Discord button
+        document.querySelector('.discord-cta').addEventListener('click', function() {
+            this.style.opacity = '0.8';
             setTimeout(() => {
-                console.log('💡 Tip: Join our Discord server for instant help and community support!');
-            }, 5000);
+                this.style.opacity = '1';
+            }, 300);
         });
     </script>
 </body>
-</html>-group">
-                            <label for="name">Full Name *</label>
-                            <input type="text" id="name" name="name" required placeholder="Your full name">
-                        </div>
+</html>        if (!response.ok) {
+                    throw new Error('Failed to send to Discord');
+                }
 
-                        <div class="form-group">
-                            <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" required placeholder="your@email.com">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="discord">Discord Username</label>
-                            <input type="text" id="discord" name="discord" placeholder="username#1234 (optional)">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="priority">Priority Level *</label>
-                            <select id="priority" name="priority" required>
-                                <option value="">Select Priority</option>
-                                <option value="Low">Low - General question</option>
-                                <option value="Medium">Medium - Non-urgent issue</option>
-                                <option value="High">High - Urgent problem</option>
-                                <option value="Critical">Critical - Service down</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="category">Issue Category</label>
-                            <select id="category" name="category">
-                                <option value="">Select Category</option>
-                                <option value="Technical Issue">Technical Issue</option>
-                                <option value="Bot Configuration">Bot Configuration</option>
-                                <option value="Billing & Account">Billing & Account</option>
-                                <option value="Feature Request">Feature Request</option>
-                                <option value="Integration Help">Integration Help</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="bot">Related Bot (if applicable)</label>
-                            <select id="bot" name="bot">
-                                <option value="">Select Bot</option>
-                                <option value="ModGuard Pro">ModGuard Pro</option>
-                                <option value="MusicMaster">MusicMaster</option>
-                                <option value="EconomyCore">EconomyCore</option>
-                                <option value="EventManager">EventManager</option>
-                                <option value="ReactionRole+">ReactionRole+</option>
-                                <option value="Analytics Pro">Analytics Pro</option>
-                                <option value="WelcomeWave">WelcomeWave</option>
-                                <option value="GameHub">GameHub</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-
-                        <div class="form
+                // Success!
+                showMessage(`✅ **Ticket ${ticketId} sent successfully!**\n\nYour support request has been delivered to our Discord team. You'll receive email updates at ${ticketData.email}.\n\n🎯 **Next Steps:**\n• Join our Discord server to track progress\n• Check your email for updates\n• Our team will respond within 2 hours`, 'success');
+                
+                this.reset();
+                
+                // Offer to join Discord
+                setTimeout(() => {
+                    if (confirm('🚀 Would you like to join our Discord server to track your ticket and get real-time updates?')) {
+                        window.open('https://discord.gg/uJtG6fmmWp', '_blank');
+                    }
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('❌ **Failed to send ticket**\n\nPlease try again or join our Discord server directly for immediate help.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Send to Discord Support</span>';
+            }
+        });
