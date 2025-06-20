@@ -624,6 +624,10 @@
                     <button type="submit" class="submit-btn" id="submitBtn">
                         <span>Send to Discord Support</span>
                     </button>
+                    
+                    <button type="button" class="submit-btn" id="testBtn" style="background: rgba(88, 101, 242, 0.3); margin-top: 0.5rem;" onclick="testWebhook()">
+                        <span>🧪 Test Discord Connection</span>
+                    </button>
                 </form>
 
                 <div class="discord-preview">
@@ -757,7 +761,47 @@
                         content: ticketData.priority === 'Critical' ? '🚨 **CRITICAL TICKET** 🚨' : null,
                         embeds: [embed]
                     })
-                function showMessage(text, type) {
+                // Test webhook function
+        async function testWebhook() {
+            const testBtn = document.getElementById('testBtn');
+            const messageDiv = document.getElementById('formMessage');
+            
+            testBtn.disabled = true;
+            testBtn.innerHTML = '<div class="loading-spinner"></div><span>Testing...</span>';
+            
+            try {
+                console.log('Testing webhook URL:', DISCORD_WEBHOOK_URL);
+                
+                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        content: '🧪 **Webhook Test** - Connection successful from Kojin Studios website!'
+                    })
+                });
+                
+                console.log('Test response status:', response.status);
+                const responseText = await response.text();
+                console.log('Test response body:', responseText);
+                
+                if (response.ok) {
+                    showMessage('✅ **Webhook test successful!**\n\nThe Discord connection is working. You should see a test message in your Discord channel.', 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}: ${responseText}`);
+                }
+                
+            } catch (error) {
+                console.error('Webhook test failed:', error);
+                showMessage(`❌ **Webhook test failed**\n\nError: ${error.message}\n\nPossible issues:\n• Webhook URL might be incorrect\n• Channel might be deleted\n• Webhook might be disabled\n• CORS/network issues`, 'error');
+            } finally {
+                testBtn.disabled = false;
+                testBtn.innerHTML = '<span>🧪 Test Discord Connection</span>';
+            }
+        }
+
+        function showMessage(text, type) {
             const messageDiv = document.getElementById('formMessage');
             messageDiv.innerHTML = text.replace(/\n/g, '<br>');
             messageDiv.className = `message ${type}`;
@@ -940,8 +984,33 @@
                 }, 3000);
                 
             } catch (error) {
-                console.error('Error:', error);
-                showMessage('❌ **Failed to send ticket**\n\nPlease try again or join our Discord server directly for immediate help.', 'error');
+                console.error('Error details:', error);
+                console.error('Error message:', error.message);
+                console.error('Error stack:', error.stack);
+                
+                // Try a simple test message
+                try {
+                    console.log('Attempting simple test message...');
+                    const testResponse = await fetch(DISCORD_WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            content: `🧪 Test message from ${ticketData.name || 'Unknown'} - Ticket ID: ${ticketId}`
+                        })
+                    });
+                    
+                    if (testResponse.ok) {
+                        showMessage('✅ **Ticket sent as simple message!**\n\nYour support request was delivered to our Discord team as a basic message. Our team will respond soon!', 'success');
+                        this.reset();
+                        return;
+                    }
+                } catch (testError) {
+                    console.error('Test message also failed:', testError);
+                }
+                
+                showMessage(`❌ **Failed to send ticket**\n\nError: ${error.message}\n\nPlease try:\n• Join our Discord server directly\n• Check the browser console for details\n• Contact us at support@kojinstudios.com`, 'error');
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = '<span>Send to Discord Support</span>';
