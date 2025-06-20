@@ -458,6 +458,7 @@
             margin-bottom: 0.5rem;
             display: block;
             transition: color 0.3s ease;
+            cursor: pointer;
         }
 
         .footer-section a:hover {
@@ -469,6 +470,101 @@
             padding-top: 2rem;
             border-top: 1px solid rgba(212, 175, 55, 0.2);
             color: var(--text-gray);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+
+        .modal {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .modal-close:hover {
+            background: rgba(220, 38, 38, 0.2);
+            color: var(--primary-red);
+        }
+
+        .modal h2 {
+            color: var(--primary-gold);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal h3 {
+            color: var(--text-light);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .modal ul {
+            color: var(--text-gray);
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
         }
 
         /* Mobile Responsiveness */
@@ -493,6 +589,11 @@
 
             .stats-row {
                 justify-content: space-between;
+            }
+
+            .modal {
+                padding: 2rem;
+                width: 95%;
             }
         }
 
@@ -639,15 +740,15 @@
                 <h3>Support</h3>
                 <a href="support.html">Contact Support</a>
                 <a href="#">Help Center</a>
-                <a href="#">Status Page</a>
-                <a href="#">Report Issue</a>
+                <a href="status.html">Status Page</a>
+                <a href="support.html">Report Issue</a>
             </div>
             <div class="footer-section">
                 <h3>Company</h3>
-                <a href="#">About Us</a>
-                <a href="#">Careers</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
+                <a href="#" onclick="openModal('aboutUs')">About Us</a>
+                <a href="#" onclick="openModal('careers')">Careers</a>
+                <a href="#" onclick="openModal('privacy')">Privacy Policy</a>
+                <a href="#" onclick="openModal('terms')">Terms of Service</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -655,7 +756,175 @@
         </div>
     </footer>
 
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalContent">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modalBody">
+                <!-- Content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Modal content data
+        const modalContent = {
+            aboutUs: {
+                title: "About Kojin Studios",
+                content: `
+                    <p>Founded in 2023, Kojin Studios emerged from a vision to bring the precision and dedication of Japanese craftsmanship to the world of Discord automation. Our name "Kojin" (個人) represents the individual attention we give to each bot, each feature, and each community we serve.</p>
+                    
+                    <h3>Our Philosophy</h3>
+                    <p>We believe that great technology should be invisible – it should enhance your community without getting in the way. Every line of code is written with the Japanese concept of "kaizen" (continuous improvement) in mind, ensuring our bots evolve alongside your needs.</p>
+                    
+                    <h3>Our Mission</h3>
+                    <p>To create Discord bots that don't just function, but excel. We're committed to delivering solutions that combine reliability, elegance, and power in ways that honor both traditional craftsmanship and modern innovation.</p>
+                    
+                    <h3>The Team</h3>
+                    <p>Our diverse team of developers, designers, and community specialists work from our studios in Tokyo and San Francisco, bringing together Eastern philosophy and Western innovation to create something truly unique in the Discord ecosystem.</p>
+                `
+            },
+            careers: {
+                title: "Join Our Team",
+                content: `
+                    <p>At Kojin Studios, we're always looking for passionate individuals who share our commitment to excellence and innovation. Join us in crafting the future of Discord automation.</p>
+                    
+                    <h3>Open Positions</h3>
+                    <ul>
+                        <li><strong>Senior Discord Bot Developer</strong> - Tokyo/Remote</li>
+                        <li><strong>UI/UX Designer</strong> - San Francisco/Remote</li>
+                        <li><strong>Community Manager</strong> - Remote</li>
+                        <li><strong>DevOps Engineer</strong> - Remote</li>
+                        <li><strong>Customer Success Specialist</strong> - Remote</li>
+                    </ul>
+                    
+                    <h3>What We Offer</h3>
+                    <ul>
+                        <li>Competitive salary and equity packages</li>
+                        <li>Flexible remote work arrangements</li>
+                        <li>Annual team retreats in Japan</li>
+                        <li>Professional development budget</li>
+                        <li>Health and wellness benefits</li>
+                        <li>State-of-the-art equipment</li>
+                    </ul>
+                    
+                    <h3>Our Culture</h3>
+                    <p>We embrace the Japanese principle of "ikigai" – finding purpose in what you do. Our team is united by a passion for creating exceptional user experiences and pushing the boundaries of what's possible with Discord bots.</p>
+                    
+                    <p>Interested? Send your resume and a note about what excites you about Discord automation to <strong>careers@kojinstudios.com</strong></p>
+                `
+            },
+            privacy: {
+                title: "Privacy Policy",
+                content: `
+                    <p><strong>Last updated:</strong> January 15, 2025</p>
+                    
+                    <h3>Information We Collect</h3>
+                    <p>We collect only the information necessary to provide our services:</p>
+                    <ul>
+                        <li>Discord server and user IDs for bot functionality</li>
+                        <li>Bot configuration and preference data</li>
+                        <li>Usage analytics for service improvement</li>
+                        <li>Support communication records</li>
+                    </ul>
+                    
+                    <h3>How We Use Your Information</h3>
+                    <ul>
+                        <li>To provide and maintain our bot services</li>
+                        <li>To improve and optimize bot performance</li>
+                        <li>To provide customer support</li>
+                        <li>To detect and prevent abuse</li>
+                    </ul>
+                    
+                    <h3>Data Security</h3>
+                    <p>We implement enterprise-grade security measures including:</p>
+                    <ul>
+                        <li>End-to-end encryption for all data transmission</li>
+                        <li>Regular security audits and penetration testing</li>
+                        <li>SOC 2 Type II compliance</li>
+                        <li>GDPR and CCPA compliance</li>
+                    </ul>
+                    
+                    <h3>Your Rights</h3>
+                    <p>You have the right to access, update, or delete your personal information. Contact us at <strong>privacy@kojinstudios.com</strong> to exercise these rights.</p>
+                    
+                    <p>We never sell your data to third parties and only share information when required by law or with your explicit consent.</p>
+                `
+            },
+            terms: {
+                title: "Terms of Service",
+                content: `
+                    <p><strong>Last updated:</strong> January 15, 2025</p>
+                    
+                    <h3>Acceptance of Terms</h3>
+                    <p>By using Kojin Studios services, you agree to these terms. If you disagree with any part, please discontinue use of our services.</p>
+                    
+                    <h3>Service Description</h3>
+                    <p>Kojin Studios provides premium Discord bot automation services. We reserve the right to modify or discontinue services with reasonable notice.</p>
+                    
+                    <h3>User Responsibilities</h3>
+                    <ul>
+                        <li>Comply with Discord's Terms of Service</li>
+                        <li>Use bots in accordance with their intended purpose</li>
+                        <li>Not attempt to reverse engineer or exploit our services</li>
+                        <li>Maintain the security of your account credentials</li>
+                    </ul>
+                    
+                    <h3>Service Availability</h3>
+                    <p>We strive for 99.9% uptime but cannot guarantee uninterrupted service. Scheduled maintenance will be announced in advance.</p>
+                    
+                    <h3>Payment and Billing</h3>
+                    <ul>
+                        <li>Subscription fees are billed monthly or annually</li>
+                        <li>Refunds are available within 7 days of purchase</li>
+                        <li>Services may be suspended for non-payment</li>
+                    </ul>
+                    
+                    <h3>Limitation of Liability</h3>
+                    <p>Kojin Studios is not liable for indirect damages. Our total liability is limited to the amount paid for services in the preceding 12 months.</p>
+                    
+                    <p>For questions about these terms, contact <strong>legal@kojinstudios.com</strong></p>
+                `
+            }
+        };
+
+        // Modal functions
+        function openModal(contentType) {
+            const modal = document.getElementById('modalOverlay');
+            const modalBody = document.getElementById('modalBody');
+            const content = modalContent[contentType];
+            
+            if (content) {
+                modalBody.innerHTML = `
+                    <h2>${content.title}</h2>
+                    ${content.content}
+                `;
+                
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modalOverlay');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
