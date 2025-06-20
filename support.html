@@ -857,8 +857,8 @@
     </div>
 
     <script>
-        // Discord webhook URL (you'll need to replace this with your actual webhook)
-        const DISCORD_WEBHOOK_URL = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+        // Discord webhook URL for support tickets
+        const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1385693343685542019/BOV36UbgAvfX3aLP-ip4p-TSwvqIZUQB8BJYMkv6sM-FvOPQCoHsMbKFLcGmhNVH957j';
 
         // Form submission handling with Discord integration
         document.getElementById('supportForm').addEventListener('submit', async function(e) {
@@ -932,19 +932,17 @@
                     }]
                 };
 
-                // Send to Discord (you'll need to implement the webhook URL)
-                if (DISCORD_WEBHOOK_URL !== 'YOUR_DISCORD_WEBHOOK_URL_HERE') {
-                    const response = await fetch(DISCORD_WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(discordPayload)
-                    });
+                // Send to Discord webhook
+                const response = await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(discordPayload)
+                });
 
-                    if (!response.ok) {
-                        throw new Error('Failed to send to Discord');
-                    }
+                if (!response.ok) {
+                    throw new Error('Failed to send to Discord');
                 }
                 
                 // Show success message
@@ -1112,29 +1110,6 @@
                 console.log('💡 Tip: Join our Discord server for instant help and community support!');
             }, 5000);
         });
-
-        // Webhook configuration helper (for development)
-        function setupDiscordWebhook() {
-            console.log(`
-🔧 To enable Discord ticket integration:
-
-1. Go to your Discord server settings
-2. Navigate to Integrations > Webhooks  
-3. Create a new webhook for your support channel
-4. Copy the webhook URL
-5. Replace 'YOUR_DISCORD_WEBHOOK_URL_HERE' in the code with your webhook URL
-
-Example webhook URL format:
-https://discord.com/api/webhooks/123456789012345678/abcdefghijklmnopqrstuvwxyz123456789
-
-The tickets will then be automatically posted to your Discord channel!
-            `);
-        }
-
-        // Call setup helper if webhook not configured
-        if (DISCORD_WEBHOOK_URL === 'YOUR_DISCORD_WEBHOOK_URL_HERE') {
-            setupDiscordWebhook();
-        }
     </script>
 </body>
 </html>-group">
