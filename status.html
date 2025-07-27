@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KojinStudios - System Status</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --kojin-red: #e74c3c;
+            --kojin-gold: #f1c40f;
+            --kojin-dark-red: #c0392b;
+            --kojin-dark-gold: #d4af37;
+            --dark-navy: #2c3e50;
+            --darker-navy: #1a252f;
+            --darkest-navy: #0f1419;
+            --text-primary: #ffffff;
+            --text-secondary: #bdc3c7;
+            --text-muted: #95a5a6;
+            --status-operational: #22c55e;
+            --status-degraded: #f59e0b;
+            --status-outage: #ef4444;
+            --status-maintenance: #3b82f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--darkest-navy) 0%, var(--darker-navy) 50%, var(--dark-navy) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Dynamic Background */
+        .bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(231, 76, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(241, 196, 15, 0.08) 0%, transparent 50%),
+                linear-gradient(135deg, var(--darkest-navy) 0%, var(--darker-navy) 50%, var(--dark-navy) 100%);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-sword {
+            position: absolute;
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(241, 196, 15, 0.3), transparent);
+            transform-origin: left center;
+            animation: floatSword 20s ease-in-out infinite;
+        }
+
+        .sword-1 { top: 20%; left: 10%; animation-delay: 0s; }
+        .sword-2 { top: 70%; right: 10%; animation-delay: 7s; }
+        .sword-3 { top: 45%; left: 30%; animation-delay: 14s; }
+
+        @keyframes floatSword {
+            0%, 100% { transform: translateY(0) rotate(15deg); opacity: 0.3; }
+            50% { transform: translateY(-15px) rotate(10deg); opacity: 0.4; }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--kojin-gold);
+            border-radius: 50%;
+            animation: floatParticle 15s linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh); opacity: 0; }
+            10%, 90% { opacity: 0.8; }
+            100% { transform: translateY(-100px) translateX(50px); opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(15, 20, 25, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(241, 196, 15, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(15, 20, 25, 0.98);
+            border-bottom-color: rgba(231, 76, 60, 0.3);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(231, 76, 60, 0.3));
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(231, 76, 60, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(231, 76, 60, 0.7), 0 0 40px rgba(241, 196, 15, 0.3); }
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: 0 0 35px rgba(231, 76, 60, 0.8), 0 0 50px rgba(241, 196, 15, 0.4);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.25rem;
+            background: rgba(15, 20, 25, 0.95);
+            border-radius: 50px;
+            padding: 0.5rem;
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(231, 76, 60, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.75rem 1.75rem;
+            border-radius: 50px;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--kojin-red), var(--kojin-gold));
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 50px;
+            z-index: -1;
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            opacity: 1;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Page Header */
+        .page-header {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 80px;
+            position: relative;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+        }
+
+        .page-header-content {
+            max-width: 800px;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--status-operational) 0%, var(--kojin-gold) 50%, var(--status-operational) 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 6s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+        }
+
+        .overall-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: rgba(34, 197, 94, 0.2);
+            border: 2px solid rgba(34, 197, 94, 0.4);
+            border-radius: 50px;
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--status-operational);
+            backdrop-filter: blur(10px);
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--status-operational);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Status Section */
+        .status-section {
+            padding: 4rem 2rem;
+        }
+
+        .status-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--kojin-red), var(--kojin-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        /* Service Status Cards */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .service-card {
+            background: linear-gradient(145deg, rgba(26, 37, 47, 0.8), rgba(44, 62, 80, 0.4));
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(241, 196, 15, 0.2);
+            border-radius: 25px;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card.operational {
+            border-color: rgba(34, 197, 94, 0.4);
+        }
+
+        .service-card.degraded {
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
+        .service-card.outage {
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        .service-card.maintenance {
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--kojin-red), var(--kojin-gold));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+        }
+
+        .service-info h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .service-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .service-status.operational {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--status-operational);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .service-status.degraded {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--status-degraded);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .service-status.outage {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--status-outage);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .service-status.maintenance {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--status-maintenance);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .service-status::before {
+            content: '●';
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .service-metrics {
+            margin-top: 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(15, 20, 25, 0.6);
+            border-radius: 15px;
+            border: 1px solid rgba(241, 196, 15, 0.2);
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--kojin-gold), var(--kojin-dark-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Uptime Chart */
+        .uptime-chart {
+            background: rgba(15, 20, 25, 0.6);
+            border: 1px solid rgba(241, 196, 15, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 4rem 0;
+        }
+
+        .uptime-chart h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--kojin-gold);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .chart-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 100px;
+            padding: 1rem 0;
+            justify-content: center;
+        }
+
+        .chart-bar {
+            width: 8px;
+            background: var(--status-operational);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .chart-bar:hover {
+            background: var(--kojin-gold);
+            transform: scale(1.2);
+        }
+
+        .chart-bar.degraded {
+            background: var(--status-degraded);
+        }
+
+        .chart-bar.outage {
+            background: var(--status-outage);
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Incidents Section */
+        .incidents-section {
+            background: rgba(15, 20, 25, 0.6);
+            border: 1px solid rgba(241, 196, 15, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 4rem 0;
+        }
+
+        .incidents-section h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--kojin-gold);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .incident-item {
+            background: rgba(26, 37, 47, 0.6);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .incident-item:hover {
+            background: rgba(26, 37, 47, 0.8);
+            transform: translateY(-2px);
+        }
+
+        .incident-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .incident-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .incident-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .incident-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .no-incidents {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .no-incidents-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--status-operational);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--darkest-navy), rgba(26, 37, 47, 0.9));
+            backdrop-filter: blur(20px);
+            border-top: 2px solid rgba(241, 196, 15, 0.3);
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: var(--kojin-gold);
+            background: rgba(241, 196, 15, 0.1);
+            transform: translateY(-3px);
+            border-color: rgba(241, 196, 15, 0.3);
+            box-shadow: 0 10px 25px rgba(241, 196, 15, 0.2);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(241, 196, 15, 0.2);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .service-card {
+                padding: 2rem;
+            }
+
+            .service-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-legend {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .incident-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Dynamic Background -->
+    <div class="bg-canvas"></div>
+    <div class="floating-elements">
+        <div class="floating-sword sword-1"></div>
+        <div class="floating-sword sword-2"></div>
+        <div class="floating-sword sword-3"></div>
+    </div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="images/logo.png" alt="KojinStudios Logo">
+                </div>
+                <span>KojinStudios</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="bots.html">Bots</a></li>
+                <li><a href="#" class="active">Status</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="page-header-content">
+            <h1>System Status</h1>
+            <p>Real-time status and performance monitoring for all KojinStudios services.</p>
+            <div class="overall-status">
+                <div class="status-indicator"></div>
+                All Systems Operational
+            </div>
+        </div>
+    </section>
+
+    <!-- Status Section -->
+    <section class="status-section">
+        <div class="status-container">
+            <div class="section-header">
+                <h2>Service Status</h2>
+            </div>
+
+            <div class="services-grid fade-in">
+                <!-- KojinMod Status -->
+                <div class="service-card operational">
+                    <div class="service-header">
+                        <div class="service-icon">🛡️</div>
+                        <div class="service-info">
+                            <h3>KojinMod</h3>
+                            <div class="service-status operational">Operational</div>
+                        </div>
+                    </div>
+                    <div class="service-metrics">
+                        <div class="metric">
+                            <span class="metric-value">99.9%</span>
+                            <span class="metric-label">Uptime</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">12ms</span>
+                            <span class="metric-label">Response</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">156</span>
+                            <span class="metric-label">Servers</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">2.4K</span>
+                            <span class="metric-label">Users</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KojinSupport Status -->
+                <div class="service-card operational">
+                    <div class="service-header">
+                        <div class="service-icon">🎫</div>
+                        <div class="service-info">
+                            <h3>KojinSupport</h3>
+                            <div class="service-status operational">Operational</div>
+                        </div>
+                    </div>
+                    <div class="service-metrics">
+                        <div class="metric">
+                            <span class="metric-value">99.8%</span>
+                            <span class="metric-label">Uptime</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">18ms</span>
+                            <span class="metric-label">Response</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">89</span>
+                            <span class="metric-label">Servers</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">1.8K</span>
+                            <span class="metric-label">Users</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KojinHost Status -->
+                <div class="service-card operational">
+                    <div class="service-header">
+                        <div class="service-icon">🌦️</div>
+                        <div class="service-info">
+                            <h3>KojinHost</h3>
+                            <div class="service-status operational">Operational</div>
+                        </div>
+                    </div>
+                    <div class="service-metrics">
+                        <div class="metric">
+                            <span class="metric-value">99.7%</span>
+                            <span class="metric-label">Uptime</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">24ms</span>
+                            <span class="metric-label">Response</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">43</span>
+                            <span class="metric-label">Servers</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">967</span>
+                            <span class="metric-label">Users</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Uptime Chart -->
+            <div class="uptime-chart fade-in">
+                <h3>90-Day Uptime History</h3>
+                <div class="chart-container" id="uptimeChart">
+                    <!-- Chart bars will be generated by JavaScript -->
+                </div>
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--status-operational);"></div>
+                        <span>Operational</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--status-degraded);"></div>
+                        <span>Degraded Performance</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--status-outage);"></div>
+                        <span>Partial Outage</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--status-maintenance);"></div>
+                        <span>Maintenance</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Incidents -->
+            <div class="incidents-section fade-in">
+                <h3>Recent Incidents</h3>
+                <div class="no-incidents">
+                    <div class="no-incidents-icon">✅</div>
+                    <p>No incidents reported in the last 90 days.</p>
+                    <p>All systems running smoothly!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="bots.html">Bots</a>
+                <a href="#" class="active">Status</a>
+                <a href="contact.html">Support</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KojinStudios. All rights reserved. Premium quality guaranteed.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Create animated particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            if (!particles) return;
+            
+            for (let i = 0; i < 60; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 12) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        // Generate uptime chart
+        function generateUptimeChart() {
+            const chartContainer = document.getElementById('uptimeChart');
+            if (!chartContainer) return;
+
+            // Generate 90 days of uptime data
+            for (let i = 0; i < 90; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                
+                // Random status with 95% operational, 4% degraded, 1% outage
+                const random = Math.random();
+                if (random > 0.95) {
+                    bar.classList.add('degraded');
+                    bar.style.height = Math.random() * 40 + 40 + '%';
+                } else if (random > 0.99) {
+                    bar.classList.add('outage');
+                    bar.style.height = Math.random() * 20 + 10 + '%';
+                } else {
+                    bar.style.height = Math.random() * 20 + 80 + '%';
+                }
+                
+                // Add tooltip on hover
+                const date = new Date();
+                date.setDate(date.getDate() - (89 - i));
+                bar.title = `${date.toLocaleDateString()}: ${bar.classList.contains('degraded') ? 'Degraded' : bar.classList.contains('outage') ? 'Outage' : 'Operational'}`;
+                
+                chartContainer.appendChild(bar);
+            }
+        }
+
+        // Update status indicators with real-time animation
+        function updateStatusIndicators() {
+            const indicators = document.querySelectorAll('.status-indicator');
+            indicators.forEach(indicator => {
+                // Add a subtle glow effect
+                setInterval(() => {
+                    indicator.style.boxShadow = `0 0 ${Math.random() * 10 + 10}px var(--status-operational)`;
+                }, 2000);
+            });
+        }
+
+        // Animate metrics on scroll
+        function animateMetrics() {
+            const metrics = document.querySelectorAll('.metric-value');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const finalValue = target.textContent;
+                        const isPercentage = finalValue.includes('%');
+                        const isTime = finalValue.includes('ms');
+                        const isCount = !isPercentage && !isTime;
+                        
+                        let currentValue = 0;
+                        const targetValue = parseFloat(finalValue.replace(/[^\d.]/g, ''));
+                        const increment = targetValue / 60; // 60 frames for smooth animation
+                        
+                        const animate = () => {
+                            currentValue += increment;
+                            if (currentValue >= targetValue) {
+                                target.textContent = finalValue;
+                                return;
+                            }
+                            
+                            if (isPercentage) {
+                                target.textContent = currentValue.toFixed(1) + '%';
+                            } else if (isTime) {
+                                target.textContent = Math.round(currentValue) + 'ms';
+                            } else if (isCount) {
+                                if (targetValue >= 1000) {
+                                    target.textContent = (currentValue / 1000).toFixed(1) + 'K';
+                                } else {
+                                    target.textContent = Math.round(currentValue).toString();
+                                }
+                            }
+                            
+                            requestAnimationFrame(animate);
+                        };
+                        
+                        target.textContent = isPercentage ? '0.0%' : isTime ? '0ms' : '0';
+                        animate();
+                        
+                        observer.unobserve(target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            metrics.forEach(metric => observer.observe(metric));
+        }
+
+        // Dynamic navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (nav) {
+                if (window.scrollY > 100) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Enhanced service card interactions
+        function initServiceCards() {
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                    
+                    const icon = this.querySelector('.service-icon');
+                    if (icon) {
+                        icon.style.transform = 'scale(1.1) rotate(-5deg)';
+                        icon.style.boxShadow = '0 15px 40px rgba(231, 76, 60, 0.5)';
+                    }
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                    
+                    const icon = this.querySelector('.service-icon');
+                    if (icon) {
+                        icon.style.transform = 'scale(1) rotate(0deg)';
+                        icon.style.boxShadow = '0 10px 30px rgba(231, 76, 60, 0.3)';
+                    }
+                });
+
+                // 3D hover effect
+                card.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+                    
+                    this.style.transform = `translateY(-10px) scale(1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+            });
+        }
+
+        // Simulate real-time updates
+        function simulateRealTimeUpdates() {
+            setInterval(() => {
+                // Update response times with small variations
+                const responseMetrics = document.querySelectorAll('.metric-value');
+                responseMetrics.forEach((metric, index) => {
+                    if (metric.textContent.includes('ms')) {
+                        const currentValue = parseInt(metric.textContent);
+                        const variation = Math.random() * 6 - 3; // ±3ms variation
+                        const newValue = Math.max(8, Math.round(currentValue + variation));
+                        metric.textContent = newValue + 'ms';
+                    }
+                });
+            }, 5000); // Update every 5 seconds
+        }
+
+        // Initialize everything when page loads
+        window.addEventListener('load', function() {
+            createParticles();
+            generateUptimeChart();
+            updateStatusIndicators();
+            animateMetrics();
+            initServiceCards();
+            simulateRealTimeUpdates();
+            
+            // Observe fade-in elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Stagger animation for service cards
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+
+        // Auto-refresh page every 5 minutes to get latest status
+        setTimeout(() => {
+            window.location.reload();
+        }, 300000); // 5 minutes
+    </script>
+</body>
+</html>
