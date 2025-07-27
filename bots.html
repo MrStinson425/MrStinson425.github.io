@@ -736,6 +736,61 @@
             text-transform: uppercase;
         }
 
+        .bot-demo-section p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .discord-demo-invite {
+            background: linear-gradient(145deg, #2f3136, #36393f);
+            border: 2px solid rgba(241, 196, 15, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .demo-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .demo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--kojin-red), var(--kojin-gold));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 15px 35px rgba(231, 76, 60, 0.4);
+        }
+
+        .demo-content {
+            flex: 1;
+        }
+
+        .demo-title {
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .demo-description {
+            color: #b9bbbe;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
         .live-demo-btn {
             background: linear-gradient(135deg, #5865f2 0%, #4c63d2 50%, #4752c4 100%);
             color: white;
@@ -924,6 +979,12 @@
             .subscription-features {
                 grid-template-columns: 1fr;
             }
+
+            .demo-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
         }
 
         /* Scroll animations */
@@ -1016,7 +1077,6 @@
                     <div class="bot-actions">
                         <button class="btn-primary" onclick="event.stopPropagation(); purchaseBot('kojinmod')">
                             <span>Purchase</span>
-                            <span>💳</span>
                         </button>
                         <button class="btn-secondary" onclick="event.stopPropagation(); openBotModal('kojinmod')">
                             <span>Learn More</span>
@@ -1044,7 +1104,6 @@
                     <div class="bot-actions">
                         <button class="btn-primary" onclick="event.stopPropagation(); purchaseBot('kojinsupport')">
                             <span>Purchase</span>
-                            <span>💳</span>
                         </button>
                         <button class="btn-secondary" onclick="event.stopPropagation(); openBotModal('kojinsupport')">
                             <span>Learn More</span>
@@ -1072,7 +1131,6 @@
                     <div class="bot-actions">
                         <button class="btn-primary" onclick="event.stopPropagation(); purchaseBot('kojinhost')">
                             <span>Purchase</span>
-                            <span>💳</span>
                         </button>
                         <button class="btn-secondary" onclick="event.stopPropagation(); openBotModal('kojinhost')">
                             <span>Learn More</span>
@@ -1172,19 +1230,30 @@
                 </div>
             </div>
 
+            <!-- Single Demo Section for KojinMod -->
             <div class="bot-demo-section">
                 <h3>🧪 Test KojinMod Live</h3>
                 <p>Live bot testing available! Try all features in real-time on our Discord server.</p>
                 
-                <div class="demo-action">
-                    <button class="live-demo-btn" onclick="joinDiscordDemo()">
-                        <span class="discord-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.193.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
-                            </svg>
-                        </span>
-                        <span>Discord</span>
-                    </button>
+                <div class="discord-demo-invite">
+                    <div class="demo-header">
+                        <div class="demo-icon">🛡️</div>
+                        <div class="demo-content">
+                            <div class="demo-title">Live Interactive Demo Available!</div>
+                            <div class="demo-description">Try all KojinMod features in real-time</div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-action">
+                        <button class="live-demo-btn" onclick="joinDiscordDemo()">
+                            <span class="discord-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.193.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+                                </svg>
+                            </span>
+                            <span>Discord</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -1197,7 +1266,6 @@
             <div class="modal-actions">
                 <button class="btn-primary" onclick="purchaseBot('kojinmod')">
                     <span>Purchase</span>
-                    <span>💳</span>
                 </button>
                 <button class="btn-secondary" onclick="closeBotModal('kojinmod')">
                     <span>Close</span>
@@ -1224,35 +1292,105 @@
             </div>
             
             <div class="modal-description">
-                KojinSupport transforms your Discord server into a professional customer service hub. With advanced ticketing, staff management, and automation features, provide exceptional support to your community.
+                <strong>KojinSupport v3.2.1 - Revolutionary Ticket Management Update</strong><br><br>
+                Experience the complete rebuild of Discord's most advanced support system. Professional support automation reimagined with next-generation ticket management algorithms, enterprise-grade workflows, and revolutionary ticket engine technology.
             </div>
 
             <div class="features-section">
-                <h3>🎯 Support Features</h3>
+                <h3>🚀 Revolutionary Ticket Engine - Complete Rebuild</h3>
                 <div class="features-grid">
                     <div class="feature-item">
-                        <h4>🎫 Advanced Ticketing</h4>
-                        <p>Create, manage, and track support tickets with custom categories and priority levels.</p>
+                        <h4>🎫 Smart Ticket Creation</h4>
+                        <p>Advanced panel system with category-based ticket routing, interactive creation workflows, and intelligent user guidance for seamless support initiation.</p>
                     </div>
                     <div class="feature-item">
-                        <h4>👥 Staff Management</h4>
-                        <p>Role-based permissions, staff assignments, and workload distribution for efficient support.</p>
+                        <h4>📊 Interactive Staff Dashboard</h4>
+                        <p>Real-time ticket management with button controls, live status updates, workload distribution, and comprehensive staff performance tracking.</p>
                     </div>
                     <div class="feature-item">
-                        <h4>📝 Ticket Transcripts</h4>
-                        <p>Automatic transcript generation and storage for all ticket conversations and resolutions.</p>
+                        <h4>🔒 Blacklist Protection</h4>
+                        <p>Comprehensive user blacklist system with expiration timers, reason tracking, temporary and permanent blocks, and automated protection.</p>
                     </div>
                     <div class="feature-item">
-                        <h4>⚡ Priority Queues</h4>
-                        <p>VIP and priority support queues to ensure important issues get immediate attention.</p>
+                        <h4>📈 Advanced Analytics</h4>
+                        <p>Detailed staff performance metrics, ticket statistics, category popularity analysis, and comprehensive support insights dashboard.</p>
                     </div>
                     <div class="feature-item">
-                        <h4>📋 Response Templates</h4>
-                        <p>Pre-configured response templates and FAQ automation to speed up common inquiries.</p>
+                        <h4>🧪 Safe Testing Environment</h4>
+                        <p>Test ticket panels safely without affecting real users, sandbox mode for configuration testing, and development-friendly features.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>💼 Professional Interface</h4>
+                        <p>Button-based controls with enterprise-level functionality, intuitive design, and streamlined workflows for maximum efficiency.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🎭 Multi-Panel Support</h4>
+                        <p>Create unlimited ticket panels with custom categories, specialized workflows, and department-specific routing systems.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>⚡ Intelligent Ticket Workflows</h4>
+                        <p>Smart panels with auto-restore after restart, seamless staff controls, ticket merging, assignment systems, and transfer capabilities.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>📋 Complete Command Suite</h4>
+                        <p>Professional setup, panel management, ticket controls, blacklist management, analytics, configuration, and interactive help systems.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <h3>⚙️ Advanced Ticket Management Features</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h4>🎯 Smart Panels</h4>
+                        <p>Create → Configure → Deploy → Auto-restore after restart with intelligent category routing and customizable workflows.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>👥 Staff Controls</h4>
+                        <p>Close → Assign → Transfer → Claim → Merge tickets seamlessly with role-based permissions and workload management.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🚫 Blacklist System</h4>
+                        <p>Temporary → Permanent → Auto-expiry → Reason tracking with comprehensive protection and appeal processes.</p>
                     </div>
                     <div class="feature-item">
                         <h4>📊 Analytics Dashboard</h4>
-                        <p>Track response times, resolution rates, and staff performance with detailed analytics.</p>
+                        <p>Staff performance → Ticket trends → Category popularity with detailed insights and performance optimization.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>📄 Transcript Generation</h4>
+                        <p>Auto-generated → HTML format → Complete conversation history with professional formatting and easy sharing.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🔧 Interactive Configuration</h4>
+                        <p>Complete server setup with staff roles, logging systems, category management, and automated optimization.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Section for KojinSupport -->
+            <div class="bot-demo-section">
+                <h3>🧪 Test KojinSupport Live</h3>
+                <p>Experience the complete ticket system in real-time! Try advanced ticket creation, staff management, and live support workflows.</p>
+                
+                <div class="discord-demo-invite">
+                    <div class="demo-header">
+                        <div class="demo-icon">🎫</div>
+                        <div class="demo-content">
+                            <div class="demo-title">Live Interactive Demo Available!</div>
+                            <div class="demo-description">Try the complete revolutionary ticket system in real-time</div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-action">
+                        <button class="live-demo-btn" onclick="joinDiscordDemo()">
+                            <span class="discord-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.193.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+                                </svg>
+                            </span>
+                            <span>Discord</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1266,7 +1404,6 @@
             <div class="modal-actions">
                 <button class="btn-primary" onclick="purchaseBot('kojinsupport')">
                     <span>Purchase</span>
-                    <span>💳</span>
                 </button>
                 <button class="btn-secondary" onclick="closeBotModal('kojinsupport')">
                     <span>Close</span>
@@ -1293,35 +1430,93 @@
             </div>
             
             <div class="modal-description">
-                KojinHost is your all-in-one server companion, bringing together essential utilities, entertainment features, and community engagement tools in one powerful bot.
+                <strong>🔔 MAJOR AI WELCOME SYSTEM UPDATE - KojinHost v2.0</strong><br><br>
+                Transform your Discord server with the most advanced AI-powered welcome solution available. Featuring revolutionary welcome automation, intelligent user detection, and enterprise-grade reliability trusted by thousands of communities worldwide.
             </div>
 
             <div class="features-section">
-                <h3>🌟 Utility Features</h3>
+                <h3>🤖 AI-Enhanced Welcome Suite</h3>
                 <div class="features-grid">
                     <div class="feature-item">
-                        <h4>🌦️ Weather System</h4>
-                        <p>Real-time weather updates, forecasts, and alerts for any location worldwide.</p>
+                        <h4>🎯 Intelligent Welcome Management</h4>
+                        <p>AI-powered comprehensive welcome panels with /welcome-setup, smart testing with /welcome-debug, and intelligent setup management supporting up to 100 configurations.</p>
                     </div>
                     <div class="feature-item">
-                        <h4>⚡ Reaction Roles</h4>
-                        <p>Advanced reaction role system with custom emojis, categories, and automatic management.</p>
+                        <h4>🎭 Auto-Roles & Media Integration</h4>
+                        <p>Complete AI role assignment with unique identifiers, advanced image/GIF support, and AI optimization for seamless media integration.</p>
                     </div>
                     <div class="feature-item">
-                        <h4>📅 Event Management</h4>
-                        <p>Create, schedule, and manage server events with RSVP tracking and reminders.</p>
+                        <h4>📅 Smart Event Automation</h4>
+                        <p>AI-powered automated event creation with /event commands, smart scheduling, advanced pattern recognition, and customizable 10-minute AI warnings.</p>
                     </div>
                     <div class="feature-item">
-                        <h4>🎮 Fun Commands</h4>
-                        <p>Interactive games, random generators, and entertainment features to engage your community.</p>
+                        <h4>📊 AI Analytics Dashboard</h4>
+                        <p>Intelligent analytics with /reactionrole metrics, smart performance monitoring, member engagement analytics, and exportable AI-powered insights.</p>
                     </div>
                     <div class="feature-item">
-                        <h4>🔧 Server Utilities</h4>
-                        <p>Server information, user lookups, polls, announcements, and administrative tools.</p>
+                        <h4>🔧 Enterprise-Grade Features</h4>
+                        <p>Dynamic user/server variable resolution, natural language color parsing, interactive customization panels, and granular database persistence.</p>
                     </div>
                     <div class="feature-item">
-                        <h4>🎯 Engagement Tools</h4>
-                        <p>Level systems, achievements, and community building features to keep members active.</p>
+                        <h4>⚡ Performance & Reliability</h4>
+                        <p>99.9% uptime, <50ms response times, AI load balancing across servers, 24/7 monitoring, and zero-downtime hot-swappable configuration.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <h3>🚀 Advanced AI Capabilities</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h4>🧠 Smart Message Detection</h4>
+                        <p>Dynamic AI resolution of user and server variables with intelligent context understanding and real-time optimization.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🎨 Flexible Color Parsing</h4>
+                        <p>Natural language color formats support (red, blue, #ff0000) with AI-enhanced color recognition and validation.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🖼️ Advanced Image Support</h4>
+                        <p>PNG, JPG, GIF, WEBP upload capabilities with AI optimization, smart compression, and quality enhancement.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>⚙️ Interactive Panels</h4>
+                        <p>Complete customization interface with AI assistance, live previews, and centralized testing environment with validation.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>💾 Database Persistence</h4>
+                        <p>Granular configuration control with AI backup systems, data integrity monitoring, and automatic recovery protocols.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h4>🔍 Live Validation</h4>
+                        <p>Real-time AI validation, guided configuration wizard with smart detection, and intelligent channel mapping automation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demo Section for KojinHost -->
+            <div class="bot-demo-section">
+                <h3>🔥 Experience the AI Welcome System Live</h3>
+                <p>Try the complete AI-powered welcome system in real-time! Experience next-generation Discord welcome automation with advanced AI features.</p>
+                
+                <div class="discord-demo-invite">
+                    <div class="demo-header">
+                        <div class="demo-icon">🌦️</div>
+                        <div class="demo-content">
+                            <div class="demo-title">Live KojinHost Demo Available!</div>
+                            <div class="demo-description">Experience advanced AI welcome automation, smart role assignment, and live event management!</div>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-action">
+                        <button class="live-demo-btn" onclick="joinDiscordDemo()">
+                            <span class="discord-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.193.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/>
+                                </svg>
+                            </span>
+                            <span>Discord</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1335,7 +1530,6 @@
             <div class="modal-actions">
                 <button class="btn-primary" onclick="purchaseBot('kojinhost')">
                     <span>Purchase</span>
-                    <span>💳</span>
                 </button>
                 <button class="btn-secondary" onclick="closeBotModal('kojinhost')">
                     <span>Close</span>
